@@ -1,0 +1,22 @@
+import mongoose from "mongoose";
+
+let categorySchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+    minLength: [3, "Title is short"],
+  },
+  imageSrc: {
+    type: String,
+    trim: true,
+  },
+ 
+},{timestamps:true});
+
+export const Categorymodel = mongoose.model("Category", categorySchema);
