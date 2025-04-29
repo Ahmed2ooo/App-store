@@ -21,10 +21,10 @@ const productSchema = new mongoose.Schema({
     type:String,
     required:true
   },
-  // ratingAvg:{
-  //   type:Number,
-  //   default:0
-  // },
+  ratingAvg:{
+    type:Number,
+  default:0
+   },
   price:{
     type:Number,
     required:true
