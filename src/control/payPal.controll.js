@@ -12,7 +12,7 @@ export const paypalPayment = Errorhandler(async (req, res) => {
   if (!order) throw new sendError(404, "Order not found");
 
   const items = order.orderItem.map(item => ({
-    name: item.productId.title,
+    name: item.productId.productName,
     unit_amount: {
       currency_code: "USD",
       value: item.productId.price.toFixed(2),
@@ -52,4 +52,33 @@ export const paypalPayment = Errorhandler(async (req, res) => {
   const approvalUrl = orderPayPal.result.links.find(link => link.rel === "approve").href;
 
   res.send({ url: approvalUrl });
+});
+
+
+// routes/services.js
+export const completePaypalPayment = Errorhandler(async (req, res) => {
+  const { token, orderId } = req.query;
+
+  const request = new paypal.orders.OrdersCaptureRequest(token);
+  request.requestBody({});
+
+  const capture = await paypalClient.client().execute(request);
+
+  if (capture.result.status === "COMPLETED") {
+    const order = await orderModel.findById(orderId);
+    if (!order) throw new sendError(404, "Order not found");
+
+    const totalAmount = capture.result.purchase_units[0].payments.captures[0].amount.value;
+
+    order.totalprice = parseFloat(totalAmount);
+    // هنا ممكن تخزّن رقم المعاملة أو حالة الدفع
+    await order.save();
+
+    return res.redirect("/pp"); // أو أي صفحة تأكيد
+  } else {
+    return res.status(400).json({
+      success: false,
+      message: "Payment not completed",
+    });
+  }
 });

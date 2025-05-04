@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema({
   }],
 
   ratingAvg:{
-    type:Number,
+    type:Number, 
   default:0
    },
   price:{
@@ -62,5 +62,14 @@ const productSchema = new mongoose.Schema({
   
   
 },{timestamps:true})
+
+productSchema.pre("save", function (next) {
+  if (this.quantity === 0) {
+    this.availability = false;
+  } else {
+    this.availability = true;
+  }
+  next();
+});
 
 export const productModel= mongoose.model("Product",productSchema)

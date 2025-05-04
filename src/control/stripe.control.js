@@ -17,7 +17,7 @@ export const stripePayment = Errorhandler(async (req, res) => {
       price_data: {
         currency: "usd",
         product_data: {
-          name: item.productId.title, 
+          name: item.productId.productName, 
         },
         unit_amount: item.productId.price * 100, // تأكد من وجود price في المنتج
       },
