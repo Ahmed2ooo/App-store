@@ -8,7 +8,7 @@ import { filterMiddleware } from "../middleware/feature.middleware.js";
 
 const categoryRouter = Router({mergeParams:true})
 categoryRouter.post("/",autharication,authrazation("admin"),
-passUserId,addMiddleware(Categorymodel),excuteMiddleware)
+addMiddleware(Categorymodel),excuteMiddleware)
 
 categoryRouter.put("/:id",autharication,authrazation("admin"),ubdateMiddleware(Categorymodel),
 filterMiddleware("_id","id"),excuteMiddleware)

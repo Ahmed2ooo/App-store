@@ -8,7 +8,7 @@ import { subCategorymodel } from "../model/subCategory.model.js";
 
 const subcategoryRouter = Router({mergeParams:true})
 subcategoryRouter.post("/",autharication,authrazation("admin"),
-passUserId,addMiddleware(subCategorymodel),excuteMiddleware)
+addMiddleware(subCategorymodel),excuteMiddleware)
 
 subcategoryRouter.put("/:id",autharication,authrazation("admin"),ubdateMiddleware(subCategorymodel),
 filterMiddleware("_id","id"),excuteMiddleware)

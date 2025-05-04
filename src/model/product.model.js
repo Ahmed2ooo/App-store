@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  title:{
+  productName:{
     type : String,
     required : true,
     minlength: [2,"title should unlees 2 "],
@@ -13,14 +13,14 @@ const productSchema = new mongoose.Schema({
     type : String, 
     required : true,
     minlength: [30,"description should unlees 10 "],
-    maxlength: [300,"description should not be bigger 500"]
 
   },
  
-  minPrevImage:{
+  productImages:[{
     type:String,
     required:true
-  },
+  }],
+
   ratingAvg:{
     type:Number,
   default:0
@@ -29,15 +29,37 @@ const productSchema = new mongoose.Schema({
     type:Number,
     required:true
   },
-  customFields: {
-    type: Map, // حقل لدعم الحقول الديناميكية
-    of: String, // القيم ستكون نصوص (يمكنك تغييره لدعم أنواع مختلفة)
-  },
+  // customFields: {
+  //   type: Map, // حقل لدعم الحقول الديناميكية
+  //   of: String, // القيم ستكون نصوص (يمكنك تغييره لدعم أنواع مختلفة)
+  // },
   availability: {
     type: Boolean,
     default: true,
     required: true,
-   }
+   },
+   quantity:{
+    type:Number,
+    default:1,
+    required: true,
+   },
+   color:{
+    type:String
+   },
+   size:{
+    type:String
+   },
+    category: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Category',
+    required: [true, 'SubCategory must be belong to parent category'],
+  },
+  subCategory:{
+    type: mongoose.Schema.ObjectId,
+    ref: 'SubCategory',
+    required: [true, 'SubCategory must be belong to parent category'],
+  }
+  
   
 },{timestamps:true})
 
