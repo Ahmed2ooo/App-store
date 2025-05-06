@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
     type : String, 
     required : true,
     minlength: [30,"description should unlees 10 "],
-
+ 
   },
  
   productImages:[{
@@ -52,12 +52,12 @@ const productSchema = new mongoose.Schema({
     category: {
     type: mongoose.Schema.ObjectId,
     ref: 'Category',
-    required: [true, 'SubCategory must be belong to parent category'],
+    // required: [true, 'SubCategory must be belong to parent category'],
   },
   subCategory:{
     type: mongoose.Schema.ObjectId,
     ref: 'SubCategory',
-    required: [true, 'SubCategory must be belong to parent category'],
+    // required: [true, 'SubCategory must be belong to parent category'],
   }
   
   

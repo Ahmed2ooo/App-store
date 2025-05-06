@@ -40,10 +40,10 @@ export const paypalPayment = Errorhandler(async (req, res) => {
           },
         },
       },
-      items: items,
+      items: items, 
     }],
     application_context: {
-      return_url: `${process.env.BASE_URL}/paypal/complete?orderId=${orderId}`,
+      return_url: `${process.env.BASE_URL}/api/v1/stripePayment/payments/complete?orderId=${orderId}`,
       cancel_url: `${process.env.BASE_URL}/cancel`,
     },
   });

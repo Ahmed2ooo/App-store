@@ -27,7 +27,7 @@ export const stripePayment = Errorhandler(async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: priceData,
       mode: "payment",
-      success_url: `${process.env.BASE_URL}/payments/complete?session_id={CHECKOUT_SESSION_ID}&orderId=${orderId}`,
+      success_url: `${process.env.BASE_URL}/api/v1/stripePayment/payments/complete?session_id={CHECKOUT_SESSION_ID}&orderId=${orderId}`,
       cancel_url: `${process.env.BASE_URL}/cancel`,
     });
   
