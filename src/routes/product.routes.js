@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { addMiddleware, deleteMiddleware, getMiddleware, ubdateMiddleware } from "../middleware/query.midlleware.js";
 import { excuteMiddleware } from "../middleware/excute.middleware.js";
-import { filterMiddleware } from "../middleware/feature.middleware.js";
+import { filterMiddleware, paganationMiddleweare } from "../middleware/feature.middleware.js";
 import { productModel } from "../model/product.model.js";
 import { autharication, authrazation } from "../middleware/auth.middleware.js";
 
 
 const productRouter = Router()
 productRouter.post("/",autharication,authrazation("admin"),addMiddleware(productModel),excuteMiddleware)
-productRouter.get("/",getMiddleware(productModel),excuteMiddleware)
+productRouter.get("/",getMiddleware(productModel),paganationMiddleweare(),excuteMiddleware)
 //use by ID
 productRouter.get("/:id",getMiddleware(productModel),filterMiddleware("_id","id"),excuteMiddleware)
 productRouter.put("/:id",autharication,authrazation("admin"),ubdateMiddleware(productModel),
