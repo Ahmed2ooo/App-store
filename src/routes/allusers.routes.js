@@ -21,7 +21,6 @@ usersRouter.use("/:id/cartitems",cartRouter)
 usersRouter.use("/:id/order",orderRouter)
 usersRouter.use("/:id/rating",ratingAndReviewRoter)
 usersRouter.use("/:id/whishlistitem",whishlistRouter)
-usersRouter.use("/:id/category",categoryRouter)
-usersRouter.use("/:id/subcategory",subcategoryRouter)
+
 
 export {usersRouter}
