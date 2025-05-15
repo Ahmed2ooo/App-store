@@ -29,10 +29,20 @@ const productSchema = new mongoose.Schema({
     type:Number,
     required:true
   },
-  // customFields: {
-  //   type: Map, // حقل لدعم الحقول الديناميكية
-  //   of: String, // القيم ستكون نصوص (يمكنك تغييره لدعم أنواع مختلفة)
-  // },
+ 
+  discount: {
+    type: Number,
+    default: 0
+  },
+
+  priceAfterDiscount: {
+    type: Number
+  },
+
+  sold: {
+    type: Number,
+    default: 0
+  },
   availability: {
     type: Boolean,
     default: true,
@@ -62,6 +72,19 @@ const productSchema = new mongoose.Schema({
   
   
 },{timestamps:true})
+
+productSchema.pre("save", function (next) {
+  if (this.discount > 0) {
+    this.priceAfterDiscount = this.price - (this.price * this.discount / 100);
+  } else {
+    this.priceAfterDiscount = this.price;
+  }
+
+  this.availability = this.quantity > 0;
+
+  next();
+});
+
 
 productSchema.pre("save", function (next) {
   if (this.quantity === 0) {

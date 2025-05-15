@@ -4,11 +4,12 @@ import { excuteMiddleware } from "../middleware/excute.middleware.js";
 import { filterMiddleware, paganationMiddleweare } from "../middleware/feature.middleware.js";
 import { productModel } from "../model/product.model.js";
 import { autharication, authrazation } from "../middleware/auth.middleware.js";
+import { getMiddlewarefilter } from "../control/product.control.js";
 
 
 const productRouter = Router()
 productRouter.post("/",autharication,authrazation("admin"),addMiddleware(productModel),excuteMiddleware)
-productRouter.get("/",getMiddleware(productModel),paganationMiddleweare(),excuteMiddleware)
+productRouter.get("/",getMiddlewarefilter(productModel),paganationMiddleweare(),excuteMiddleware)
 //use by ID
 productRouter.get("/:id",getMiddleware(productModel),filterMiddleware("_id","id"),excuteMiddleware)
 productRouter.put("/:id",autharication,authrazation("admin"),ubdateMiddleware(productModel),
