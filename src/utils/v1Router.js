@@ -18,6 +18,6 @@ v1Router.use("/product",productRouter)
 v1Router.use("/cart",cartRouter)
 v1Router.use("/stripePayment",stripePaymentRoutes)
 v1Router.use("/paypalPayment",payPalRouter)
-usersRouter.use("/category",categoryRouter)
-usersRouter.use("/subcategory",subcategoryRouter)
+v1Router.use("/category",categoryRouter)
+v1Router.use("/subcategory",subcategoryRouter)
 export{v1Router}

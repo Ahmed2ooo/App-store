@@ -40,12 +40,15 @@ export const getMiddlewarefilter = (model) =>
         filter.productName = { $regex: req.query.name, $options: "i" };
       }
   
+      req.filter = filter;
+
+
       let queryObj = model.find(filter);
   
       if (req.query.sort === "top-rated") {
         queryObj = queryObj.sort({ ratingAvg: -1 });
       } else if (req.query.sort === "most-sold") {
-        queryObj = queryObj.sort({ sold: -1 });
+        queryObj = queryObj.sort({ sold: -1 }); 
       } else if (req.query.sort && !["top-rated", "most-sold"].includes(req.query.sort)) {
         throw new sendError(400, "Invalid sort type. Use 'top-rated' or 'most-sold'");
       }

@@ -7,6 +7,6 @@ const adminRouter = Router()
 
 adminRouter.put("/:id",autharication,authrazation("admin"),toggleUserStatus)
 adminRouter.get("/profile",autharication,checkUserActive)
-adminRouter.get("/",autharication,authrazation("admin"),paganationMiddleweare(),getAllUsers)
+adminRouter.get("/",autharication,authrazation("admin"),getAllUsers)
 adminRouter.get("/:id",autharication,authrazation("admin"),getUserById)
 export {adminRouter}
