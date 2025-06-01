@@ -16,4 +16,13 @@ const cartSchema = new mongoose.Schema({
         required:"true"
     }
 },{timestamps:true})
+
+cartSchema.pre(/^find/,function(next){
+    this.populate({
+        path:"productId"
+    })
+    next();
+})
+
+
 export const cartModel = mongoose.model("Cart",cartSchema)
