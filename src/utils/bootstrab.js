@@ -15,7 +15,9 @@ export const bootstrap = async(app)=>{
     app.use(cors())
     app.use(express.static(publicPath));
 
-  
+    app.get("/", (req, res) => {
+    res.send("welcome Vercel!");
+  });
     app.get("/pp", (req, res) => {
       res.sendFile(path.join(publicPath, "pp.html"));
     });
