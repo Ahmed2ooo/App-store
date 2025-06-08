@@ -40,16 +40,13 @@ export const paganationMiddlewearefilter = (model) => {
 
       const skip = (page - 1) * limit;
 
-      // ✅ تحقق من وجود الاستعلام الجاهز من getMiddleware
       if (!req.queryMongoose) {
-        req.queryMongoose = model.find(); // fallback
+        req.queryMongoose = model.find(); 
       }
 
-      // ✅ عدّل الاستعلام للإضافة التصفّح
       req.queryMongoose = req.queryMongoose.skip(skip).limit(limit);
 
-      // ✅ احسب عدد الصفوف
-      const totalRows = await model.countDocuments(req.filter || {}); // استخدم نفس الفلتر
+      const totalRows = await model.countDocuments(req.filter || {}); 
 
       const noOfPages = Math.ceil(totalRows / limit);
 
@@ -65,7 +62,7 @@ export const paganationMiddlewearefilter = (model) => {
       next();
     } catch (err) {
       console.error("Pagination error:", err.message);
-      res.status(500).json({ message: "❌ Pagination middleware error" });
+      res.status(500).json({ message: " Pagination middleware error" });
     }
   };
 }; 

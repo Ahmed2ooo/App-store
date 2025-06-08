@@ -25,8 +25,8 @@ const orderSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
-    adress:{
-       govermate:{
+    address:{
+       state:{
         type:String
        },
        street:{
