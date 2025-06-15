@@ -16,13 +16,17 @@ const productSchema = new mongoose.Schema({
  
   },
  
-  productImages:[{
-    type:String,
-    required:true
-  }],
+productImages: [
+      {
+        filePath: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
 
   ratingAvg:{
-    type:Number, 
+    type:Number,  
   default:0
    },
   price:{
@@ -55,7 +59,7 @@ const productSchema = new mongoose.Schema({
    },
    color:{
     type:String
-   },
+   }, 
    size:{
     type:String
    },
@@ -65,9 +69,7 @@ const productSchema = new mongoose.Schema({
     // required: [true, 'SubCategory must be belong to parent category'],
   },
   subCategory:{
-    type: mongoose.Schema.ObjectId,
-    ref: 'SubCategory',
-    // required: [true, 'SubCategory must be belong to parent category'],
+    type:String,
   }
   
   

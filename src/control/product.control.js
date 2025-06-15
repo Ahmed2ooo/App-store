@@ -1,6 +1,5 @@
 import { Categorymodel } from "../model/category.model.js";
 import { productModel } from "../model/product.model.js";
-import { subCategorymodel } from "../model/subCategory.model.js";
 import { Errorhandler, sendError } from "../service/errorHandler.js";
 
 export const addProduct = Errorhandler(async(req,res)=>{
@@ -26,15 +25,7 @@ export const getMiddlewarefilter = (model) =>
         filter.category = category._id;
       }
   
-      if (req.query.subCategory) {
-        const subCategory = await subCategorymodel.findOne({
-          name: { $regex: `^${req.query.subCategory}$`, $options: "i" },
-        });
-  
-        if (!subCategory) throw new sendError(404, "SubCategory name not found");
-  
-        filter.subCategory = subCategory._id;
-      }
+     
   
       if (req.query.name) {
         filter.productName = { $regex: req.query.name, $options: "i" };

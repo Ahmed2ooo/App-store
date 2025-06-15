@@ -34,32 +34,38 @@ export const stripePayment = Errorhandler(async (req, res) => {
     res.send({ url: session.url });
   });
   
+
   //complete paid===================================================
+ 
   export const completePayment = Errorhandler(async (req, res) => {
-    const { session_id, orderId } = req.query;
-  
-    const [session, lineItems] = await Promise.all([
-      stripe.checkout.sessions.retrieve(session_id, {
-        expand: ["payment_intent.payment_method"],
-      }),
-      stripe.checkout.sessions.listLineItems(session_id),
-    ]);
-  
-    if (session.payment_status === "paid") {
-      const order = await orderModel.findById(orderId);
-      if (!order) throw new sendError(404, "Order not found");
-  
-      // تحديث الطلب كمثال (ممكن تضيف حالة الدفع داخل النموذج)
-      order.totalprice = session.amount_total / 100;
-      await order.save();
-  
-      return res.redirect("/pp");
-    } else {
-      return res.status(400).json({
-        success: false,
-        message: "Payment not completed",
-        total: session.amount_total,
-      });
-    }
-  });
+  const { session_id, orderId } = req.query;
+
+  const [session, lineItems] = await Promise.all([
+    stripe.checkout.sessions.retrieve(session_id, {
+      expand: ["payment_intent.payment_method"],
+    }),
+    stripe.checkout.sessions.listLineItems(session_id),
+  ]);
+
+  if (session.payment_status === "paid") {
+    const order = await orderModel.findById(orderId);
+    if (!order) throw new sendError(404, "Order not found");
+
+    order.isPaid = true;
+
+    order.totalprice = session.amount_total / 100;
+
+    await order.save();
+
+    return res.redirect("/pp");
+  } else {
+    return res.status(400).json({
+      success: false,
+      message: "Payment not completed",
+      total: session.amount_total,
+    });
+  }
+});
+
+ 
   

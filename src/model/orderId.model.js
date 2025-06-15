@@ -27,15 +27,29 @@ const orderSchema = new mongoose.Schema({
     },
     address:{
        state:{
-        type:String
+        type:String,
+        required:true
+
        },
        street:{
-        type:String
+        type:String,
+        required:true
+
        },
        description:{
-        type:String
+        type:String,
+        required:true
+
        }
     },
+    phone:{
+        type:String,
+        required:true
+    },
+    isPaid: {
+  type: Boolean,
+  default: false
+}
     
   
 },{timestamps:true})
