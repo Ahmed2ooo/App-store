@@ -5,6 +5,6 @@ export const excuteMiddleware = async(req,res)=>{
         data: result,
         // meta:req?.meta
 
-    })
+    }) 
 
 }
