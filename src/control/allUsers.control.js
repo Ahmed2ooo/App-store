@@ -11,12 +11,13 @@ dotenv.config()
 //signup user=============================================================
 export const signup = Errorhandler(async(req,res)=>{
     const {password} = req.body
-    const hashedPassword = bcrypt.hashSync(password,+process.env.SALT_ROUNDS)
+      const saltRounds = parseInt(process.env.SALT_ROUNDS) || 10;
+    const hashedPassword = bcrypt.hashSync(password,saltRounds)
     const signupResult = await userModel.create({...req.body,password:hashedPassword})
     if(!signupResult)throw new sendError(400,"Error in sign")
        await sendEmail(signupResult.email)
         res.status(200).json({
-         message:"sucesses, verify your email",
+         message:"sucesses, verify your email", 
          data:signupResult
     
         })

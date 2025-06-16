@@ -18,3 +18,4 @@ filterMiddleware("_id","id"),excuteMiddleware)
 productRouter.delete("/:id",autharication,authrazation("admin"),deleteMiddleware(productModel),filterMiddleware("_id","id"),
 excuteMiddleware)
 export {productRouter}
+ 
