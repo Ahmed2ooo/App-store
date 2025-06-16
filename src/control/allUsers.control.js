@@ -15,7 +15,7 @@ export const signup = Errorhandler(async(req,res)=>{
     const hashedPassword = bcrypt.hashSync(password,saltRounds)
     const signupResult = await userModel.create({...req.body,password:hashedPassword})
     if(!signupResult)throw new sendError(400,"Error in sign")
-       await sendEmail(signupResult.email)
+    //    await sendEmail(signupResult.email)
         res.status(200).json({
          message:"sucesses, verify your email", 
          data:signupResult
