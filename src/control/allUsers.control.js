@@ -18,7 +18,7 @@ export const signup = Errorhandler(async(req,res)=>{
     //    await sendEmail(signupResult.email)
         res.status(200).json({
          message:"sucesses, verify your email", 
-         data:signupResult
+         data:signupResult 
     
         })
 })
