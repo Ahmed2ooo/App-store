@@ -4,7 +4,6 @@ import paypal from "@paypal/checkout-server-sdk";
 import { Errorhandler, sendError } from "../service/errorHandler.js";
 import { orderModel } from "../model/orderId.model.js";
 
-// إنشاء طلب دفع عبر PayPal
 export const paypalPayment = Errorhandler(async (req, res) => {
   const { orderId } = req.body;
 
@@ -68,13 +67,15 @@ export const completePaypalPayment = Errorhandler(async (req, res) => {
     const order = await orderModel.findById(orderId);
     if (!order) throw new sendError(404, "Order not found");
 
-    const totalAmount = capture.result.purchase_units[0].payments.captures[0].amount.value;
+    const totalAmount = parseFloat(
+      capture.result.purchase_units[0].payments.captures[0].amount.value
+    );
 
-    order.totalprice = parseFloat(totalAmount);
-    // هنا ممكن تخزّن رقم المعاملة أو حالة الدفع
+    order.isPaid = true;
+    order.totalprice = totalAmount;
     await order.save();
 
-    return res.redirect("/pp"); // أو أي صفحة تأكيد
+    return res.redirect("/pp");
   } else {
     return res.status(400).json({
       success: false,
@@ -82,3 +83,4 @@ export const completePaypalPayment = Errorhandler(async (req, res) => {
     });
   }
 });
+

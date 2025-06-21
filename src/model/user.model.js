@@ -45,9 +45,13 @@ const userSchem = new mongoose.Schema({
         default :"user",
         enum : ["user","admin"]
     },
-    Image:{
-        type: String,
-    },
+   personalImages: {
+        filePath: {
+          type: String,
+          required: true,
+        },
+      },
+
     paymentData: {
         token: {
           type: String,

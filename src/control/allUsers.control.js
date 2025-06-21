@@ -63,48 +63,76 @@ export const ubdatePassword = Errorhandler(async(req,res)=>{
  })
 
 //ubdate my Account=========================================================
-export const ubdateAccountData = Errorhandler(async (req, res) => {
-    const { email: oldEmail } = req.docodedToken;
-    const { email, phone, address, name } = req.body;
+// export const ubdateAccountData = Errorhandler(async (req, res) => {
+//     const { email: oldEmail } = req.docodedToken;
+//     const { email, phone, address, name } = req.body;
 
-    const user = await userModel.findOne({ email: oldEmail });
-    if (!user) throw new sendError(404, "User not found");
+//     const user = await userModel.findOne({ email: oldEmail });
+//     if (!user) throw new sendError(404, "User not found");
 
-    const updateFields = { email, phone, address, name };
+//     const updateFields = { email, phone, address, name };
 
-    if (req.file) {
-        const newImagePath = req.file.filename; 
-        if (user.Image) {
-            const oldImagePath = path.join("public", user.Image); 
+//     if (req.file) {
+//         const newImagePath = req.file.filename; 
+//         if (user.Image) {
+//             const oldImagePath = path.join("public", user.Image); 
             
-            if (fs.existsSync(oldImagePath)) {
-                try {
-                    fs.unlinkSync(oldImagePath); 
-                } catch (err) {
-                    console.error(" Error deleting old image:", err);
-                }
-            }
-        }
+//             if (fs.existsSync(oldImagePath)) {
+//                 try {
+//                     fs.unlinkSync(oldImagePath); 
+//                 } catch (err) {
+//                     console.error(" Error deleting old image:", err);
+//                 }
+//             }
+//         }
 
-        updateFields.Image = newImagePath;
-    }
+//         updateFields.Image = newImagePath;
+//     }
 
-    const updatedUser = await userModel.findOneAndUpdate(
-        { email: oldEmail },
-        updateFields,
-        { new: true }
-    );
+//     const updatedUser = await userModel.findOneAndUpdate(
+//         { email: oldEmail },
+//         updateFields,
+//         { new: true }
+//     );
 
-    if (!updatedUser) throw new sendError(400, "Error updating account data");
+//     if (!updatedUser) throw new sendError(400, "Error updating account data");
 
-    if (email && email !== oldEmail) {
-        updatedUser.active = true; 
-        await updatedEmail(email); 
-        await updatedUser.save(); 
-    }
+//     if (email && email !== oldEmail) {
+//         updatedUser.active = true; 
+//         await updatedEmail(email); 
+//         await updatedUser.save(); 
+//     }
 
-    res.status(200).json({
-        message: "Success",
-        data: updatedUser
-    });
+//     res.status(200).json({
+//         message: "Success",
+//         data: updatedUser
+//     });
+// });
+export const ubdateAccountData = Errorhandler(async (req, res) => {
+  const { email: oldEmail } = req.docodedToken;
+  const { email, phone, address, name } = req.body;
+
+  const user = await userModel.findOne({ email: oldEmail });
+  if (!user) throw new sendError(404, "User not found");
+
+  const updateFields = { email, phone, address, name ,personalImages};
+
+  const updatedUser = await userModel.findOneAndUpdate(
+    { email: oldEmail },
+    updateFields,
+    { new: true }
+  );
+
+  if (!updatedUser) throw new sendError(400, "Error updating account data");
+
+  if (email && email !== oldEmail) {
+    updatedUser.active = true;
+    await updatedEmail(email);
+    await updatedUser.save();
+  }
+
+  res.status(200).json({
+    message: "Success",
+    data: updatedUser,
+  });
 });

@@ -15,7 +15,7 @@ usersRouter.post("/signUp",signup)
 usersRouter.post("/login",logIn)
 usersRouter.put("/updatepass",autharication,ubdatePassword)
 usersRouter.get("/",autharication,getMyAccounnData)
-usersRouter.put("/", autharication,upload.single("newProfileImage"), ubdateAccountData);
+usersRouter.put("/", autharication,ubdateAccountData);
 
 usersRouter.use("/:id/cartitems",cartRouter)
 usersRouter.use("/:id/order",orderRouter)

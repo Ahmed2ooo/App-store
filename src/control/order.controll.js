@@ -68,3 +68,18 @@ export const makeOrder = Errorhandler(async (req, res) => {
         data: result,
     });
 });
+//get all order for admin================================================================
+export const getAllOrders = async (req, res) => {
+  try {
+    const orders = await orderModel.find()
+      .populate({ path: "userId", select: "username" });  
+
+    res.status(200).json({
+      success: true,
+      count: orders.length,
+      data: orders,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
