@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { autharication } from "../middleware/auth.middleware.js";
+import { autharication, authrazation } from "../middleware/auth.middleware.js";
 import { passUserId } from "../model/middleware/order.middleware.js";
 import { makeOrder } from "../control/order.controll.js";
 import { getMiddleware } from "../middleware/query.midlleware.js";

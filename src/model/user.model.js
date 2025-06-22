@@ -48,7 +48,6 @@ const userSchem = new mongoose.Schema({
    personalImages: {
         filePath: {
           type: String,
-          required: true,
         },
       },
 
