@@ -78,6 +78,7 @@ export const getAllOrders = async (req, res) => {
       success: true,
       count: orders.length,
       data: orders,
+      meta: req.meta,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

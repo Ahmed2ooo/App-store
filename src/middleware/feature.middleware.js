@@ -30,6 +30,44 @@ export const paganationMiddleweare = ()=>{
         next();
     }
 }
+// export const paganationMiddlewearefilter = (model) => {
+//   return async (req, res, next) => {
+//     try {
+//       let { page = 1, limit = 10 } = req.query;
+
+//       page = parseInt(page);
+//       limit = parseInt(limit);
+
+//       const skip = (page - 1) * limit;
+
+//       if (!req.queryMongoose) {
+//         req.queryMongoose = model.find(); 
+//       }
+
+//       req.queryMongoose = req.queryMongoose.skip(skip).limit(limit);
+
+//       const filter = req.filter || {};
+//       const totalRows = await model.countDocuments(req.filter || {}); 
+
+//       const noOfPages = Math.ceil(totalRows / limit);
+
+//       req.meta = {
+//         totalRows,
+//         noOfPages,
+//         currentPage: page,
+//         perPage: limit,
+//         hasNext: page < noOfPages,
+//         hasPrev: page > 1,
+//       };
+
+//       next();
+//     } catch (err) {
+//       console.error("Pagination error:", err.message);
+//       res.status(500).json({ message: " Pagination middleware error" });
+//     }
+//   };
+// }; 
+
 export const paganationMiddlewearefilter = (model) => {
   return async (req, res, next) => {
     try {
@@ -41,12 +79,13 @@ export const paganationMiddlewearefilter = (model) => {
       const skip = (page - 1) * limit;
 
       if (!req.queryMongoose) {
-        req.queryMongoose = model.find(); 
+        req.queryMongoose = model.find();
       }
 
       req.queryMongoose = req.queryMongoose.skip(skip).limit(limit);
 
-      const totalRows = await model.countDocuments(req.filter || {}); 
+      const safeFilter = typeof req.filter === 'object' && req.filter !== null ? req.filter : {};
+      const totalRows = await model.countDocuments(safeFilter);
 
       const noOfPages = Math.ceil(totalRows / limit);
 
@@ -65,4 +104,5 @@ export const paganationMiddlewearefilter = (model) => {
       res.status(500).json({ message: " Pagination middleware error" });
     }
   };
-}; 
+};
+

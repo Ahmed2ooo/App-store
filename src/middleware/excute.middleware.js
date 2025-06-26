@@ -3,7 +3,7 @@ export const excuteMiddleware = async(req,res)=>{
     res.status(200).json({
         message:"sucesses", 
         data: result,
-        // meta:req?.meta
+        meta:req?.meta
 
     }) 
 
